@@ -1,0 +1,12 @@
+{
+  "name": "mosh-vidly-node",
+  "version": "1.0.0",
+  "description": "App created during Ultimate Node course from Code with Mosh",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
