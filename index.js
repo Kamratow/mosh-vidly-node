@@ -19,11 +19,22 @@ app.get('/api/genres', (_req, res) => {
 });
 
 app.get('/api/genres/:id', (req, res) => {
-    const selectedGenre = genres.find((singleGenre) => singleGenre.id === parseInt(req.params.id));
+    const genre = genres.find((singleGenre) => singleGenre.id === parseInt(req.params.id));
     
-    if(!selectedGenre) return res.status(404).send('Genre with given ID was not found');
+    if(!genre) return res.status(404).send('Genre with given ID was not found');
 
-    res.send(selectedGenre);
+    res.send(genre);
+});
+
+app.delete('/api/genres/:id', (req, res) => {
+    const genre = genres.find((singleGenre) => singleGenre.id === parseInt(req.params.id));
+    
+    if(!genre) return res.status(404).send('Genre with given ID was not found');
+
+    const genreToDeleteIndex = genres.indexOf(genre);
+    genres.splice(genreToDeleteIndex, 1);
+
+    res.send(genre);
 });
 
 app.listen(port, () => {
