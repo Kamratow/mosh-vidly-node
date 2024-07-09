@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const Joi = require('joi');
 
 app.use(express.json());
 
@@ -9,6 +10,14 @@ const genres = [
     { id: 2, name: 'Horror' },  
     { id: 3, name: 'Romance' },
 ];
+
+function validateGenre(genre) {
+    const schema = Joi.object({
+        name: Joi.string().min(3).required()
+    });
+
+    return schema.validate(genre);
+}
 
 app.get('/', (_req, res) => {
     res.send('Hello world');
@@ -35,6 +44,21 @@ app.delete('/api/genres/:id', (req, res) => {
     genres.splice(genreToDeleteIndex, 1);
 
     res.send(genre);
+});
+
+app.post('/api/genres', (req, res) => {
+    const { error } = validateGenre(req.body);
+
+    if(error) return res.status(400).send(error.details[0].message);
+
+    const newGenre = {
+        id: genres.length + 1,
+        name: req.body.name
+    };
+
+    genres.push(newGenre);
+
+    res.send(newGenre);
 });
 
 app.listen(port, () => {
