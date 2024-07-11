@@ -11,3 +11,5 @@ const Customer = mongoose.model(
     phone: String,
   })
 );
+
+module.exports = router;
