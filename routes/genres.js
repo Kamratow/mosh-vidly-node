@@ -4,7 +4,7 @@ const Joi = require("joi");
 
 const router = express.Router();
 
-const Genre = new mongoose.model(
+const Genre = mongoose.model(
   "Genre",
   new mongoose.Schema({
     name: {
