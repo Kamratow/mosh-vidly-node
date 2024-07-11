@@ -24,7 +24,8 @@ function validateGenre(genre) {
   return schema.validate(genre);
 }
 
-router.get("/", (_req, res) => {
+router.get("/", async (_req, res) => {
+  const genres = await Genre.find().sort("name");
   res.send(genres);
 });
 
