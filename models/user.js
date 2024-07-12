@@ -9,7 +9,6 @@ const User = mongoose.model(
       minLength: 5,
       maxLength: 50,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -23,7 +22,6 @@ const User = mongoose.model(
       minLength: 5,
       maxLength: 1024,
       required: true,
-      unique: true,
     },
   })
 );
