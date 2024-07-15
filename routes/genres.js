@@ -6,8 +6,12 @@ const { Genre, validate } = require("../models/genre");
 const router = express.Router();
 
 router.get("/", async (_req, res) => {
-  const genres = await Genre.find().sort("name");
-  res.send(genres);
+  try {
+    const genres = await Genre.find().sort("name");
+    res.send(genres);
+  } catch (ex) {
+    res.status(500).send("Something failed.");
+  }
 });
 
 router.post("/", auth, async (req, res) => {
