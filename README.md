@@ -15,3 +15,9 @@ nodemon index.js
 ```
 
 By default server will be listening on port 3000 unless you provide different port in `process.env.PORT` variable.
+
+In order to run the server correctly `vidly_jwtPrivateKey` environment variable needs to be set on your machine.
+An example of setting the variable for mac:
+```
+export vidly_jwtPrivateKey=testPrivateKey
+```
