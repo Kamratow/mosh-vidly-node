@@ -7,7 +7,10 @@ module.exports = winston.createLogger({
       filename: "logfile.log",
       level: "error",
     }),
-    new winston.transports.Console({ level: "info" }),
+    new winston.transports.Console({
+      level: "info",
+      format: winston.format.simple(),
+    }),
     new winston.transports.MongoDB({
       db: "mongodb://localhost:27017/vidly",
       level: "error",
