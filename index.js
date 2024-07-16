@@ -16,8 +16,13 @@ const app = express();
 
 process.on("uncaughtException", (ex) => {
   console.log("We got uncaught exception!");
+  console.log(ex);
 
-  logger.error(ex.message, ex);
+  logger.log({
+    level: "error",
+    message: ex.message,
+    metadata: ex,
+  });
 });
 
 throw new Error("Error when starting application!");
