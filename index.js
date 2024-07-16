@@ -3,6 +3,8 @@ const express = require("express");
 const error = require("./middleware/error");
 
 const app = express();
+
+require("./startup/logging")();
 require("./startup/routes")(app);
 require("./startup/db")();
 
