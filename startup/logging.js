@@ -1,5 +1,5 @@
 require("express-async-errors");
-const logger = require("./logger");
+const logger = require("../logger");
 
 module.exports = function () {
   process.on("uncaughtException", (ex) => {
