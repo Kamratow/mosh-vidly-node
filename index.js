@@ -16,20 +16,27 @@ const app = express();
 
 process.on("uncaughtException", (ex) => {
   console.log("We got uncaught exception!");
-  console.log(ex);
 
   logger.log({
     level: "error",
     message: ex.message,
     metadata: ex,
   });
+  process.exit(1);
 });
 
-throw new Error("Error when starting application!");
+process.on("unhandledRejection", (ex) => {
+  console.log("We got unhandled rejection!");
+
+  logger.error(ex.stack, ex);
+  process.exit(1);
+});
+
+const p = Promise.reject(new Error("Something failed asynchronously!"));
 
 if (!config.get("jwtPrivateKey")) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");
-  process.exit(1);
+  process.exitCode = 1;
 }
 
 const port = process.env.PORT || 3000;
