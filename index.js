@@ -2,6 +2,7 @@ require("express-async-errors");
 const config = require("config");
 const mongoose = require("mongoose");
 const express = require("express");
+const logger = require("./logger");
 const home = require("./routes/home");
 const genres = require("./routes/genres");
 const customers = require("./routes/customers");
@@ -12,6 +13,14 @@ const auth = require("./routes/auth");
 const error = require("./middleware/error");
 
 const app = express();
+
+process.on("uncaughtException", (ex) => {
+  console.log("We got uncaught exception!");
+
+  logger.error(ex.message, ex);
+});
+
+throw new Error("Error when starting application!");
 
 if (!config.get("jwtPrivateKey")) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");
