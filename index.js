@@ -1,11 +1,12 @@
 require("express-async-errors");
 const config = require("config");
 const express = require("express");
-const mongoose = require("mongoose");
 const logger = require("./logger");
+const error = require("./middleware/error");
 
 const app = express();
 require("./startup/routes")(app);
+require("./startup/db")();
 
 process.on("uncaughtException", (ex) => {
   console.log("We got uncaught exception!");
@@ -33,11 +34,6 @@ if (!config.get("jwtPrivateKey")) {
 }
 
 const port = process.env.PORT || 3000;
-
-mongoose
-  .connect("mongodb://localhost:27017/vidly")
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch((err) => console.log("Could not connect to MongoDB...", err));
 
 // Custom error middleware
 app.use(error);
