@@ -1,4 +1,4 @@
-const asyncMiddleware = require("../middleware");
+const asyncMiddleware = require("../middleware/async");
 const admin = require("../middleware/admin");
 const auth = require("../middleware/auth");
 const express = require("express");
