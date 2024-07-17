@@ -1,5 +1,5 @@
 const winston = require("winston");
-require("winston-mongodb");
+// require("winston-mongodb");
 
 module.exports = winston.createLogger({
   transports: [
@@ -14,12 +14,12 @@ module.exports = winston.createLogger({
         winston.format.simple()
       ),
     }),
-    new winston.transports.MongoDB({
-      db: "mongodb://localhost:27017/vidly",
-      level: "error",
-      options: {
-        useUnifiedTopology: true,
-      },
-    }),
+    // new winston.transports.MongoDB({
+    //   db: "mongodb://localhost:27017/vidly",
+    //   level: "error",
+    //   options: {
+    //     useUnifiedTopology: true,
+    //   },
+    // }),
   ],
 });
