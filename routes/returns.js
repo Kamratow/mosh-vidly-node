@@ -1,16 +1,13 @@
+const Joi = require("joi");
 const auth = require("../middleware/auth");
+const validate = require("../middleware/validate");
 const express = require("express");
 const { Rental } = require("../models/rental");
 const { Movie } = require("../models/movie");
 
 const router = express.Router();
 
-router.post("/", auth, async (req, res) => {
-  if (!req.body.customerId)
-    return res.status(400).send("CustomerId not provided");
-
-  if (!req.body.movieId) return res.status(400).send("MovieId not provided");
-
+router.post("/", [auth, validate(validateReturn)], async (req, res) => {
   // Alternative approach for sturcturing the find conditions
   //   const rental = await Rental.findOne({
   //     customer: { _id: req.body.customerId },
@@ -41,5 +38,18 @@ router.post("/", auth, async (req, res) => {
 
   res.status(200).send(rental);
 });
+
+function validateReturn(req) {
+  const schema = Joi.object({
+    customerId: Joi.string()
+      .required()
+      .regex(/^[0-9a-fA-F]{24}$/, "object Id"),
+    movieId: Joi.string()
+      .required()
+      .regex(/^[0-9a-fA-F]{24}$/, "object Id"),
+  });
+
+  return schema.validate(req);
+}
 
 module.exports = router;
