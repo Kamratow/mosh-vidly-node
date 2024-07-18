@@ -1,5 +1,5 @@
 const request = require("supertest");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const { Rental } = require("../../models/rental");
 const { User } = require("../../models/user");
 
@@ -43,6 +43,10 @@ describe("/api/returns", () => {
   afterEach(async () => {
     await server.close();
     await Rental.deleteMany({});
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
   });
 
   it("should return 401 if client is not logged in", async () => {

@@ -1,7 +1,7 @@
 const request = require("supertest");
+const mongoose = require("mongoose");
 const { Genre } = require("../../models/genre");
 const { User } = require("../../models/user");
-const { default: mongoose } = require("mongoose");
 
 let server;
 
@@ -13,6 +13,10 @@ describe("/api/genres", () => {
   afterEach(async () => {
     await server.close();
     await Genre.deleteMany({});
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
   });
 
   describe("GET /", () => {
