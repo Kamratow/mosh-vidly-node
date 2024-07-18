@@ -21,11 +21,8 @@ router.post("/", [auth, validate(validateReturn)], async (req, res) => {
   if (rental.dateReturned)
     return res.status(400).send("Return already returned.");
 
-  rental.dateReturned = new Date();
-  rental.rentalFee =
-    Math.round(
-      Math.abs(rental.dateReturned - rental.dateOut) / (1000 * 60 * 60 * 24)
-    ) * rental.movie.dailyRentalRate;
+  rental.return();
+
   await rental.save();
 
   await Movie.updateOne(
