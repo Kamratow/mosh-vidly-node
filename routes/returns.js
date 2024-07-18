@@ -30,7 +30,7 @@ router.post("/", [auth, validate(validateReturn)], async (req, res) => {
     { $inc: { numberInStock: 1 } }
   );
 
-  res.status(200).send(rental);
+  res.send(rental);
 });
 
 function validateReturn(req) {
