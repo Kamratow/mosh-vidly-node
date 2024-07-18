@@ -1,6 +1,7 @@
 const auth = require("../middleware/auth");
 const express = require("express");
 const { Rental } = require("../models/rental");
+const { Movie } = require("../models/movie");
 
 const router = express.Router();
 
@@ -32,6 +33,11 @@ router.post("/", auth, async (req, res) => {
       Math.abs(rental.dateReturned - rental.dateOut) / (1000 * 60 * 60 * 24)
     ) * rental.movie.dailyRentalRate;
   await rental.save();
+
+  await Movie.updateOne(
+    { _id: rental.movie._id },
+    { $inc: { numberInStock: 1 } }
+  );
 
   res.status(200).send();
 });
