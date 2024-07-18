@@ -21,10 +21,10 @@ router.post("/", auth, async (req, res) => {
     "movie._id": req.body.movieId,
   });
 
-  if (!rental)
-    return res
-      .status(404)
-      .send("No rental found for the passed customer/movie pair");
+  if (!rental) return res.status(404).send("Rental not found.");
+
+  if (rental.dateReturned)
+    return res.status(400).send("Return already returned.");
 
   res.status(200).send("return success");
 });

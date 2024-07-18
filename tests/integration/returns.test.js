@@ -79,4 +79,18 @@ describe("/api/returns", () => {
 
     expect(res.status).toBe(404);
   });
+
+  it("should return 400 if rental is already processed", async () => {
+    // Alternative approach for setting rental dateReturned
+    // rental.dateReturned = new Date();
+    // await rental.save();
+
+    await Rental.findByIdAndUpdate(rental._id, {
+      dateReturned: new Date(),
+    });
+
+    const res = await exec();
+
+    expect(res.status).toBe(400);
+  });
 });
