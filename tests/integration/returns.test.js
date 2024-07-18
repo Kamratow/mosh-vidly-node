@@ -68,4 +68,15 @@ describe("/api/returns", () => {
 
     expect(res.status).toBe(400);
   });
+
+  it("should return 404 if no rental is found", async () => {
+    // Alternative approach instead of removing rental saved in beforeEach we can simply use different movieId
+    // movieId = new mongoose.Types.ObjectId();
+
+    await Rental.deleteMany({});
+
+    const res = await exec();
+
+    expect(res.status).toBe(404);
+  });
 });

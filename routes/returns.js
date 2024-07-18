@@ -1,5 +1,6 @@
 const auth = require("../middleware/auth");
 const express = require("express");
+const { Rental } = require("../models/rental");
 
 const router = express.Router();
 
@@ -8,6 +9,22 @@ router.post("/", auth, async (req, res) => {
     return res.status(400).send("CustomerId not provided");
 
   if (!req.body.movieId) return res.status(400).send("MovieId not provided");
+
+  // Alternative approach for sturcturing the find conditions
+  //   const rental = await Rental.findOne({
+  //     customer: { _id: req.body.customerId },
+  //     movie: { _id: req.body.movieId },
+  //   });
+
+  const rental = await Rental.findOne({
+    "customer._id": req.body.customerId,
+    "movie._id": req.body.movieId,
+  });
+
+  if (!rental)
+    return res
+      .status(404)
+      .send("No rental found for the passed customer/movie pair");
 
   res.status(200).send("return success");
 });
