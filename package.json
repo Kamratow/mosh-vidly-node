@@ -4,7 +4,11 @@
   "description": "App created during Ultimate Node course from Code with Mosh",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose --runInBand --coverage"
+    "test": "jest --watchAll --verbose --runInBand --coverage",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "20.15.0"
   },
   "keywords": [],
   "author": "",
